@@ -7,10 +7,11 @@ export function AppWrapper({ children }) {
 	const { data: session, status } = useSession();
 
 	const [playlists, setPlaylists] = useState([]);
-	const [playlistId, setPlaylistsId] = useState("7illAp125ks33u0IgECL1P");
+	const [playlistId, setPlaylistsId] = useState("5HnhwlqhAOwOIA3tVO0Uso");
+	const [selectedPlaylist, setSelectedPlaylist] = useState([]);
 
-	const onClickPlaylist = (id) => {
-		setPlaylistsId(id);
+	const onClickPlaylist = (data) => {
+		setPlaylistsId(data.id);
 	};
 
 	const store = {
@@ -19,10 +20,12 @@ export function AppWrapper({ children }) {
 			playlistId,
 			session,
 			status,
+			selectedPlaylist
 		},
 		globalFunctions: {
 			onClickPlaylist,
 			setPlaylists,
+			setSelectedPlaylist,
 			signOut,
 		},
 	};

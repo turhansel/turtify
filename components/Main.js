@@ -21,26 +21,34 @@ const shuffleColor = (array) => {
 function Main() {
 	const store = useAppContext();
 	const spotifyApi = useSpotify();
-	
+
+	//I destructed the store for easy access
+	const { playlistId, selectedPlaylist, setSelectedPlaylist } = {
+		playlistId: store.globalStates.playlistId,
+		selectedPlaylist: store.globalStates.selectedPlaylist,
+		setSelectedPlaylist: store.globalFunctions.setSelectedPlaylist,
+	};
+
 	const { data: session } = useSession();
 	const [color, setColor] = useState(null);
 
-
 	useEffect(() => {
 		setColor(shuffleColor(colors));
-	}, [store.globalStates.playlistId]);
-
+	}, [playlistId]);
 
 	useEffect(() => {
 		if (spotifyApi.getAccessToken()) {
-			spotifyApi.getPlaylist(store.globalStates.playlistId).then((data) => {
-				// store.globalFunctions.setPlaylists(data?.body)
-				//TODO push to a different state and render
-				console.log(data.body)
-			});
+			spotifyApi
+				.getPlaylist(playlistId)
+				.then((data) => {
+					setSelectedPlaylist(data?.body);
+					console.log(data?.body);
+				})
+				.catch((err) => console.log('something went wrong!!11', err));
 		}
-	}, [spotifyApi, store.globalStates.playlistId]);
+	}, [spotifyApi, playlistId]);
 
+	console.log('playlistId', playlistId);
 	return (
 		<div className='flex-grow '>
 			<header className='absolute top-5 right-8'>
@@ -61,6 +69,7 @@ function Main() {
                     text-white w-full padding-8`}
 			>
 				hello
+				<img src={selectedPlaylist?.images?.[0]?.url} />
 			</section>
 		</div>
 	);
