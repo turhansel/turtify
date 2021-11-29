@@ -1,6 +1,6 @@
 import 'tailwindcss/tailwind.css';
 import { SessionProvider } from 'next-auth/react';
-import { AppWrapper } from '../context/state';
+import { AppWrapper } from '../context/store';
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 	return (
 		<SessionProvider session={session}>

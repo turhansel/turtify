@@ -1,6 +1,8 @@
 import { ChevronDownIcon } from '@heroicons/react/outline';
 import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { useAppContext } from '../context/store';
+import useSpotify from '../hooks/useSpotify';
 
 const colors = [
 	'from-indigo-500',
@@ -17,12 +19,28 @@ const shuffleColor = (array) => {
 };
 
 function Main() {
+	const store = useAppContext();
+	const spotifyApi = useSpotify();
+	
 	const { data: session } = useSession();
 	const [color, setColor] = useState(null);
 
+
 	useEffect(() => {
 		setColor(shuffleColor(colors));
-	}, []);
+	}, [store.globalStates.playlistId]);
+
+
+	useEffect(() => {
+		if (spotifyApi.getAccessToken()) {
+			spotifyApi.getPlaylist(store.globalStates.playlistId).then((data) => {
+				// store.globalFunctions.setPlaylists(data?.body)
+				//TODO push to a different state and render
+				console.log(data.body)
+			});
+		}
+	}, [spotifyApi, store.globalStates.playlistId]);
+
 	return (
 		<div className='flex-grow '>
 			<header className='absolute top-5 right-8'>

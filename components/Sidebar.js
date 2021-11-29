@@ -6,29 +6,41 @@ import {
 	RssIcon,
 	HeartIcon,
 } from '@heroicons/react/outline';
-import { useAppContext } from '../context/state';
+import { useEffect } from 'react';
+import { useAppContext } from '../context/store';
+import useSpotify from '../hooks/useSpotify';
 
 function Sidebar() {
-	const context = useAppContext();
-	console.log(context.playlistDetail.playlistId);
+	const spotifyApi = useSpotify();
+	const store = useAppContext();
 
-	const renderPlaylists = (data) => {
-		return data.map((playlist) => (
-			<p
-				key={playlist.id}
-				className='cursor-pointer hover:text-white'
-				onClick={() => context.functions.onClickPlaylist(playlist.id)}
-			>
-				{playlist.name}
-			</p>
-		));
-	};
+	useEffect(() => {
+		if (spotifyApi.getAccessToken()) {
+			spotifyApi.getUserPlaylists().then((data) => {
+				store.globalFunctions.setPlaylists(data.body.items);
+			});
+		}
+	}, [store.globalStates.session, spotifyApi]);
+
+	// const renderPlaylists = (data) => {
+	// 	return data?.map((playlist) => (
+	// 		<p
+	// 			key={playlist.id}
+	// 			className='cursor-pointer hover:text-white truncate'
+	// 			onClick={() =>
+	// 				store.globalFunctions.onClickPlaylist(playlist.id)
+	// 			}
+	// 		>
+	// 			{playlist.name}
+	// 		</p>
+	// 	));
+	// };
 	return (
-		<div className='text-gray-500 p-5 text-sm border-r border-gray-900 overflow-y-scroll h-screen'>
+		<div className='text-gray-500 p-5 text-sm border-r border-gray-900 overflow-y-scroll h-screen max-w-[240px]'>
 			<div className='space-y-4'>
 				<button
 					className='flex items-center space-x-2 hover:text-white'
-					onClick={() => context.functions.signOut()}
+					onClick={() => store.globalFunctions.signOut()}
 				>
 					<p>Logout</p>
 				</button>
@@ -59,7 +71,19 @@ function Sidebar() {
 					<p>Your Episodes</p>
 				</button>
 				<hr className='border-t-[0.1px] border-gray-900' />
-				{renderPlaylists(context?.playlistDetail?.playlists)}
+				{/* {renderPlaylists(store?.globalStates?.playlists)} */}
+				{store?.globalStates?.playlists.map((playlist) => (
+					<p
+						key={playlist.id}
+						className='cursor-pointer hover:text-white truncate'
+						onClick={() =>
+							store.globalFunctions.onClickPlaylist(playlist.id)
+						}
+					>
+						{playlist.name}
+					</p>
+				))}
+				{console.log("handle:",store?.globalStates?.playlists)}
 			</div>
 		</div>
 	);
