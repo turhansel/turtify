@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useAppContext } from '../context/store';
 import useSpotify from '../hooks/useSpotify';
+import Songs from './Songs';
 
 const colors = [
 	'from-indigo-500',
