@@ -7,8 +7,8 @@ export function AppWrapper({ children }) {
 	const { data: session, status } = useSession();
 
 	const [playlists, setPlaylists] = useState([]);
-	const [playlistId, setPlaylistsId] = useState("5HnhwlqhAOwOIA3tVO0Uso");
 	const [selectedPlaylist, setSelectedPlaylist] = useState([]);
+	const [playlistId, setPlaylistsId] = useState('5HnhwlqhAOwOIA3tVO0Uso');
 
 	const onClickPlaylist = (data) => {
 		setPlaylistsId(data.id);
@@ -20,7 +20,7 @@ export function AppWrapper({ children }) {
 			playlistId,
 			session,
 			status,
-			selectedPlaylist
+			selectedPlaylist,
 		},
 		globalFunctions: {
 			onClickPlaylist,

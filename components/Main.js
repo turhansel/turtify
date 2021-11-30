@@ -3,7 +3,8 @@ import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { useAppContext } from '../context/store';
 import useSpotify from '../hooks/useSpotify';
-import Songs from './Songs';
+import SongList from './SongList';
+
 
 const colors = [
 	'from-indigo-500',
@@ -43,15 +44,13 @@ function Main() {
 				.getPlaylist(playlistId)
 				.then((data) => {
 					setSelectedPlaylist(data?.body);
-					console.log(data?.body);
 				})
 				.catch((err) => console.log('something went wrong!!11', err));
 		}
 	}, [spotifyApi, playlistId]);
 
-	console.log('playlistId', playlistId);
 	return (
-		<div className='flex-grow '>
+		<div className='flex-grow overflow-y-scroll'>
 			<header className='absolute top-5 right-8'>
 				<div
 					className='flex items-center bg-black space-x-3 opacity-90 
@@ -82,7 +81,7 @@ function Main() {
 			</section>
 
 			<div>
-				<Songs />
+				<SongList />
 			</div>
 		</div>
 	);
