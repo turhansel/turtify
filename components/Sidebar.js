@@ -26,7 +26,7 @@ function Sidebar() {
 		return data?.map((playlist) => (
 			<p
 				key={playlist.id}
-				className='cursor-pointer hover:text-white truncate'
+				className='cursor-pointer hover:text-white truncate w-32 lg:w-52'
 				onClick={() => store.globalFunctions.onClickPlaylist(playlist)}
 			>
 				{playlist.name}
@@ -40,12 +40,6 @@ function Sidebar() {
 		 overflow-y-scroll h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex'
 		>
 			<div className='space-y-4'>
-				<button
-					className='flex items-center space-x-2 hover:text-white'
-					onClick={() => store.globalFunctions.signOut()}
-				>
-					<p>Logout</p>
-				</button>
 				<button className='flex items-center space-x-2 hover:text-white'>
 					<HomeIcon className='h-5 w-5' />
 					<p>Home</p>
