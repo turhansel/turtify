@@ -1,7 +1,7 @@
 import { useAppContext } from '../context/store';
 import { millisToMinutesAndSeconds } from '../lib/time';
 import useSpotify from '../hooks/useSpotify';
-import { useEffect } from 'react';
+
 
 function SongItem({ song, index }) {
 	const spotifyApi = useSpotify();
@@ -14,23 +14,36 @@ function SongItem({ song, index }) {
 		setIsPlaying: store.globalFunctions.setIsPlaying,
 	};
 
-	useEffect(() => {
-		spotifyApi.getAccessToken()
-	}, [])
-
 	const playSong = () => {
-		// spotifyApi.getAccessToken()
 		setCurrentSongId(song?.track?.id);
 		setIsPlaying(true);
-		spotifyApi.play({
-			uris: [song?.track?.uri],
-		});
+		spotifyApi.play(
+			{uris:[currentSongId]}
+			// JSON.stringify({ uris: [currentSongId] })
+		);
+		
 	};
+
+	spotifyApi.play()
+  .then(function() {
+    console.log('Playback started');
+  }, function(err) {
+    //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
+    console.log('Something went wrong!', err);
+  });
+	console.log("isPlaying",isPlaying)
+	console.log("currentSongId",currentSongId)
+	// spotifyApi
+	// 	.getPlaylist(playlistId)
+	// 	.then((data) => {
+	// 		setSelectedPlaylist(data?.body);
+	// 	})
+	// 	.catch((err) => console.log('something went wrong!!11', err));
 
 	return (
 		<div
 			className='grid grid-cols-2 text-gray-500 py-4 px-5 hover:bg-gray-800 rounded-lg cursor-pointer'
-			onClick={() => playSong()}
+			onClick={playSong}
 		>
 			<div className='flex items-center space-x-4 '>
 				<p>{index}</p>
