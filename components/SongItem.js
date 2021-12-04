@@ -14,31 +14,14 @@ function SongItem({ song, index }) {
 		setIsPlaying: store.globalFunctions.setIsPlaying,
 	};
 
-	const playSong = () => {
+	const playSong = async() => {
 		setCurrentSongId(song?.track?.id);
 		setIsPlaying(true);
-		spotifyApi.play(
-			{uris:[currentSongId]}
+		await spotifyApi.play(
+			{ uris: [currentSongId] }
 			// JSON.stringify({ uris: [currentSongId] })
 		);
-		
 	};
-
-	spotifyApi.play()
-  .then(function() {
-    console.log('Playback started');
-  }, function(err) {
-    //if the user making the request is non-premium, a 403 FORBIDDEN response code will be returned
-    console.log('Something went wrong!', err);
-  });
-	console.log("isPlaying",isPlaying)
-	console.log("currentSongId",currentSongId)
-	// spotifyApi
-	// 	.getPlaylist(playlistId)
-	// 	.then((data) => {
-	// 		setSelectedPlaylist(data?.body);
-	// 	})
-	// 	.catch((err) => console.log('something went wrong!!11', err));
 
 	return (
 		<div
