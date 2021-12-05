@@ -2,7 +2,6 @@ import { useAppContext } from '../context/store';
 import { millisToMinutesAndSeconds } from '../lib/time';
 import useSpotify from '../hooks/useSpotify';
 
-
 function SongItem({ song, index }) {
 	const spotifyApi = useSpotify();
 	const store = useAppContext();
@@ -14,19 +13,23 @@ function SongItem({ song, index }) {
 		setIsPlaying: store.globalFunctions.setIsPlaying,
 	};
 
-	const playSong = async() => {
-		setCurrentSongId(song?.track?.id);
-		setIsPlaying(true);
-		await spotifyApi.play(
-			{ uris: [currentSongId] }
-			// JSON.stringify({ uris: [currentSongId] })
-		);
+	const playSong = () => {
+		if (spotifyApi.getAccessToken()) {
+			setCurrentSongId(song?.track?.id);
+			setIsPlaying(true);
+			spotifyApi.play({
+				uris: [`spotify:track:${song.track.id}`],
+				// uris: [song.track.id],
+			});
+		}
 	};
+	console.log("isPlaying",isPlaying)
+	console.log("currentSongId",currentSongId)
 
 	return (
 		<div
-			className='grid grid-cols-2 text-gray-500 py-4 px-5 hover:bg-gray-800 rounded-lg cursor-pointer'
-			onClick={playSong}
+			className='grid grid-cols-2 text-gray-500 py-4 px-5 hover:bg-gray-800 rounded-lg cursor-pointer select-none	'
+			onDoubleClick={playSong}
 		>
 			<div className='flex items-center space-x-4 '>
 				<p>{index}</p>
