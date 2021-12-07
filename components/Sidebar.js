@@ -4,8 +4,8 @@ import {
 	LibraryIcon,
 	PlusCircleIcon,
 	RssIcon,
-	HeartIcon,
 } from '@heroicons/react/outline';
+import { HeartIcon } from '@heroicons/react/solid';
 import { useEffect } from 'react';
 import { useAppContext } from '../context/store';
 import useSpotify from '../hooks/useSpotify';
@@ -36,8 +36,8 @@ function Sidebar() {
 
 	return (
 		<div
-		className='text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900
-		 overflow-y-scroll h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex overflow-hidden'
+			className='text-gray-500 p-5 text-xs lg:text-sm border-r border-gray-900
+		 overflow-y-scroll h-screen sm:max-w-[12rem] lg:max-w-[15rem] hidden md:inline-flex overflow-hidden pb-36'
 		>
 			<div className='space-y-4'>
 				<button className='flex items-center space-x-2 hover:text-white'>
@@ -58,8 +58,8 @@ function Sidebar() {
 					<PlusCircleIcon className='h-5 w-5' />
 					<p>Create Playlist</p>
 				</button>
-				<button className='flex items-center space-x-2 hover:text-white'>
-					<HeartIcon className='h-5 w-5' />
+				<button className='flex items-center space-x-2 hover:text-white '>
+					<HeartIcon className='h-5 w-5 text-blue-500' />
 					<p>Liked Songs</p>
 				</button>
 				<button className='flex items-center space-x-2 hover:text-white'>
