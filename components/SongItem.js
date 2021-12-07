@@ -19,12 +19,9 @@ function SongItem({ song, index }) {
 			setIsPlaying(true);
 			spotifyApi.play({
 				uris: [`spotify:track:${song.track.id}`],
-				// uris: [song.track.id],
 			});
 		}
 	};
-	console.log("isPlaying",isPlaying)
-	console.log("currentSongId",currentSongId)
 
 	return (
 		<div
