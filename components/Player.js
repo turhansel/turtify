@@ -16,6 +16,7 @@ import { useAppContext } from '../context/store';
 import useSongInfo from '../hooks/useSongInfo';
 import useSpotify from '../hooks/useSpotify';
 
+
 function Player() {
 	const spotifyApi = useSpotify();
 	const songInfo = useSongInfo();
@@ -103,7 +104,7 @@ function Player() {
 				<img
 					className='hidden md:inline h-10 w-10'
 					src={songInfo?.album?.images?.[0]?.url}
-					alt='img'
+					alt=''
 				/>
 				<div>
 					<h2>{songInfo?.name}</h2>
@@ -112,29 +113,29 @@ function Player() {
 			</div>
 			{/* Center */}
 			<div className='flex items-center justify-evenly'>
-				<SwitchHorizontalIcon className='h-5 w-5 cursor-pointer hover:scale-125 transition transform duration-150 ease-out' />
-				<RewindIcon />
+				<SwitchHorizontalIcon className='player-button' />
+				<RewindIcon className="player-button"/>
 
 				{isPlaying ? (
 					<PauseIcon
 						onClick={handlePlayPause}
-						className='h-5 w-5 cursor-pointer hover:scale-125 transition transform duration-150 ease-out w-10 h-10'
+						className='player-button w-10 h-10'
 					/>
 				) : (
 					<PlayIcon
 						onClick={handlePlayPause}
-						className='h-5 w-5 cursor-pointer hover:scale-125 transition transform duration-150 ease-out w-10 h-10'
+						className='player-button w-10 h-10'
 					/>
 				)}
 
-				<FastForwardIcon className='h-5 w-5 cursor-pointer hover:scale-125 transition transform duration-150 ease-out' />
-				<TrendingUpIcon className='h-5 w-5 cursor-pointer hover:scale-125 transition transform duration-150 ease-out' />
+				<FastForwardIcon className='player-button' />
+				<TrendingUpIcon className='player-button' />
 			</div>
 			{/* Right */}
 			<div className='flex items-center space-x-3 md:space-x-4 justify-end pr-5'>
 				<VolumeDownIcon
 					onClick={() => volume > 0 && setVolume(volume - 10)}
-					className='h-5 w-5 cursor-pointer hover:scale-125 transition transform duration-150 ease-out'
+					className='player-button'
 				/>
 				<input
 					className='w-14 md:w-28'
@@ -146,10 +147,9 @@ function Player() {
 				/>
 				<VolumeUpIcon
 					onClick={() => volume < 100 && setVolume(volume + 10)}
-					className='h-5 w-5 cursor-pointer hover:scale-125 transition transform duration-150 ease-out'
+					className='player-button'
 				/>
 			</div>
-			<div className='text-white'>hello</div>
 		</div>
 	);
 }
