@@ -6,9 +6,7 @@ function SongItem({ song, index }) {
 	const spotifyApi = useSpotify();
 	const store = useAppContext();
 
-	const { isPlaying, currentSongId, setCurrentSongId, setIsPlaying } = {
-		isPlaying: store.globalStates.isPlaying,
-		currentSongId: store.globalStates.currentSongId,
+	const { setCurrentSongId, setIsPlaying } = {
 		setCurrentSongId: store.globalFunctions.setCurrentSongId,
 		setIsPlaying: store.globalFunctions.setIsPlaying,
 	};
